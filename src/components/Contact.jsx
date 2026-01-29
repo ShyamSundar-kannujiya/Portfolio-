@@ -1,8 +1,36 @@
-import React from 'react'
-import { motion } from 'framer-motion'
-import { FaDribbble, FaEnvelope, FaGithub, FaLinkedin, FaMapMarked, FaPhone, FaTwitch, FaTwitter } from 'react-icons/fa';
+import React, { useRef } from "react";
+import { motion } from "framer-motion";
+import emailjs from "@emailjs/browser";
+import {
+  FaDribbble, FaEnvelope, FaGithub, FaLinkedin, FaMapMarked, FaPhone, FaTwitter,
+  } from "react-icons/fa";
 
 function Contact() {
+  
+  const form = useRef();
+
+  const sendEmail = (e) => {
+    e.preventDefault();
+
+    //  EmailJS configuration
+    emailjs
+      .sendForm(
+        "service_ycc9oz7",
+        "template_7h83wbv",
+        form.current,
+        "T7P3haI_73_xRlN3D",
+      )
+      .then(
+        (result) => {
+          alert("Message sent successfully!");
+          form.current.reset();
+        },
+        (error) => {
+          alert("Failed to send: " + error.text);
+        },
+      );
+  };
+
   return (
     <motion.div
       initial={{ opacity: 0, y: 50 }}
@@ -23,12 +51,15 @@ function Contact() {
         <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 max-w-5xl mx-auto">
           {/* Contact Form */}
           <div>
-            <form className="space-y-6">
+            {/* 3. form mein ref aur onSubmit add kiya */}
+            <form ref={form} onSubmit={sendEmail} className="space-y-6">
               <div>
                 <label htmlFor="name" className="block text-gray-300 mb-2">
                   Your Name
                 </label>
                 <input
+                  name="user_name" // 4. 'name' attribute zaroori hai
+                  required
                   className="w-full bg-dark-300 border border-dark-400 rounded-lg px-4 py-3 outline-none "
                   type="text"
                 />
@@ -38,6 +69,8 @@ function Contact() {
                   Email Address
                 </label>
                 <input
+                  name="user_email" // 4. 'name' attribute zaroori hai
+                  required
                   className="w-full bg-dark-300 border border-dark-400 rounded-lg px-4 py-3 outline-none "
                   type="email"
                 />
@@ -47,8 +80,9 @@ function Contact() {
                   Your Massage
                 </label>
                 <textarea
+                  name="message" // 4. 'name' attribute zaroori hai
+                  required
                   className="w-full h-40 bg-dark-300 border border-dark-400 rounded-lg px-4 py-3 outline-none "
-                  type="text"
                 />
                 <button
                   type="submit"
@@ -59,7 +93,7 @@ function Contact() {
               </div>
             </form>
           </div>
-          {/* Contact Information */}
+          {/* Contact Information - No Changes Here */}
           <div className="space-y-8">
             <div className="flex items-start ">
               <div className="text-purple text-2xl mr-4">
@@ -127,4 +161,4 @@ function Contact() {
   );
 }
 
-export default Contact
+export default Contact;
