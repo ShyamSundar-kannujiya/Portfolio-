@@ -26,7 +26,7 @@ const Hero = () => {
           </p>
           <div className="flex space-x-4">
             <a
-              href="/SHYAM_SUNDUR_CV.pdf"
+              href="/public/SHYAM_SUNDUR_CV.pdf"
               className="px-6 py-3 bg-purple-600 rounded-lg font-medium hover:bg-purple-700 transition duration-300"
             >
               CV Download
